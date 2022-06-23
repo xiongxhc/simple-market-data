@@ -4,16 +4,10 @@ import { getMarketData } from "../controller/marketData";
 import { APIError } from "../utils/error";
 import { unhandledException } from "../utils/unhandledException";
 
-export interface GetMarketDataParams {
-  assets: assetNames[];
-  currencies: currencyNames[];
-}
-
 const marketData = async (req: Request, res: Response) => {
   try {
-    const { assets, currencies }: GetMarketDataParams = req.body;
-
-    const { data } = await getMarketData({ assets, currencies });
+    const { assets, currencies } = req.query;
+    const { data } = await getMarketData(assets, currencies);
 
     if (data.Response === "Error") {
       throw new APIError(

@@ -5,35 +5,27 @@ import { assetNames, currencyNames } from "../../../const/assets";
 describe("Test GET /api/market-data", () => {
   const url = "http://localhost:3080/api/market-data";
   it("can get market data", async () => {
-    const data = {
+    const query = {
       assets: [assetNames.BTC, assetNames.ETH],
       currencies: [currencyNames.USD],
     };
-    const response = await axios({
-      url,
-      method: "GET",
-      data,
-    });
+    const response = await axios.get(`${url}?assets=${query.assets}&currencies=${query.currencies}`);
     expect(response.status).to.deep.equal(200);
   });
 
   it("can throw 422 error if assets not in assetNames", async () => {
-    const data = {
+    const query = {
       assets: ["USDT", assetNames.ETH],
       currencies: [currencyNames.USD],
     };
-    const response = await axios({
-      url,
-      method: "GET",
-      data,
-    }).catch((err) => {
+    await axios.get(`${url}?assets=${query.assets}&currencies=${query.currencies}`).catch((err) => {
       expect(err.response.data).to.deep.equal({
         errors: [
           {
-            value: ["USDT", assetNames.ETH],
+            value: "USDT,ETH",
             msg: "Invalid assets",
             param: "assets",
-            location: "body",
+            location: "query",
           },
         ],
       });
@@ -41,22 +33,18 @@ describe("Test GET /api/market-data", () => {
   });
 
   it("can throw 422 error if currency not in currencyNames", async () => {
-    const data = {
+    const query = {
       assets: [assetNames.BTC, assetNames.ETH],
       currencies: ["AUD"],
     };
-    const response = await axios({
-      url,
-      method: "GET",
-      data,
-    }).catch((err) => {
+    await axios.get(`${url}?assets=${query.assets}&currencies=${query.currencies}`).catch((err) => {
       expect(err.response.data).to.deep.equal({
         errors: [
           {
-            value: ["AUD"],
+            value: "AUD",
             msg: "Invalid currencies",
             param: "currencies",
-            location: "body",
+            location: "query",
           },
         ],
       });

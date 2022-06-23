@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { validationResult, body, ValidationChain } from "express-validator";
+import { validationResult, query, ValidationChain } from "express-validator";
 import { assetNames, currencyNames } from "../const/assets";
 
 const validate = (validations: ValidationChain[]) => {
@@ -18,33 +18,33 @@ const validate = (validations: ValidationChain[]) => {
 };
 
 export const apiGetMarketDataValidation = validate([
-  body("assets")
-    .isArray()
-    .custom((assets) => {
-      return assets.every((asset: string) => {
-        return asset in assetNames;
-      });
-    })
-    .withMessage("Invalid assets"),
-  body("currencies")
-    .isArray()
-    .custom((currencies) => {
-      return currencies.every((currency: string) => {
-        return currency in currencyNames;
-      });
-    })
-    .withMessage("Invalid currencies"),
+  query("assets")
+  .custom((assets) => {
+    const assetArray = assets.split(",");
+    return assetArray.every((asset: string) => {
+      return asset in assetNames;
+    });
+  })
+  .withMessage("Invalid assets"),
+  query("currencies")
+  .custom((currencies) => {
+    const currencyArray = currencies.split(",");
+    return currencyArray.every((currency: string) => {
+      return currency in currencyNames;
+    });
+  })
+  .withMessage("Invalid currencies"),
 ]);
 
 export const apiGetMarketHistoryValidation = validate([
-  body("asset")
-    .custom((asset) => {
-      return asset in assetNames;
-    })
-    .withMessage("Invalid asset"),
-  body("currency")
-    .custom((currency) => {
-      return currency in currencyNames;
-    })
-    .withMessage("Invalid currency"),
+  query("asset")
+  .custom((asset) => {
+    return asset in assetNames;
+  })
+  .withMessage("Invalid asset"),
+  query("currency")
+  .custom((currency) => {
+    return currency in currencyNames;
+  })
+  .withMessage("Invalid currency"),
 ]);

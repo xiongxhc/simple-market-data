@@ -5,17 +5,16 @@ import { getHourlyHistoryDataForOneDay } from "../controller/historyData";
 import { APIError } from "../utils/error";
 import { unhandledException } from "../utils/unhandledException";
 
-export interface GetHistoryDataParams {
-  asset: assetNames;
-  currency: currencyNames;
-}
-
 const getHistoricData = async (req: Request, res: Response) => {
   try {
-    const { asset, currency }: GetHistoryDataParams = req.body;
-    const { data } = await getHourlyHistoryDataForOneDay({ asset, currency });
+    const { asset, currency } = req.query;
+    const { data } = await getHourlyHistoryDataForOneDay(asset, currency);
 
-    console.log(data);
+    if (data.Response === "Error") {
+      throw new APIError(
+        `Unable to get data for asset: ${asset} in currency: ${currency}`
+      );
+    }
 
     return res.status(200).json({ data });
   } catch (err) {

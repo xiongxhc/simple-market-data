@@ -5,18 +5,12 @@ import { getHourlyHistoryDataForOneDay } from "../../controller/historyData";
 
 describe("Test history data functions", () => {
   it("Can get 24 hours history data", async () => {
-    const data = await getHourlyHistoryDataForOneDay({
-      asset: assetNames.BTC,
-      currency: currencyNames.USD,
-    });
+    const data = await getHourlyHistoryDataForOneDay(assetNames.BTC,currencyNames.USD);
     expect(data.status).to.deep.equal(200);
   });
 
   it("Can get error if asset are invalid", async () => {
-    const data = await getHourlyHistoryDataForOneDay({
-      asset: "???" as any,
-      currency: currencyNames.USD,
-    });
+    const data = await getHourlyHistoryDataForOneDay("???" as any,currencyNames.USD);
     expect(data.data).to.deep.equal({
       Response: "Error",
       Message: "CCCAGG market does not exist for this coin pair (???-USD)",
@@ -29,10 +23,7 @@ describe("Test history data functions", () => {
   });
 
   it("Can get error if currency are invalid", async () => {
-    const data = await getHourlyHistoryDataForOneDay({
-      asset: assetNames.BTC,
-      currency: "???" as any,
-    });
+    const data = await getHourlyHistoryDataForOneDay(assetNames.BTC,"???" as any);
     expect(data.data).to.deep.equal({
       Response: "Error",
       Message: "CCCAGG market does not exist for this coin pair (BTC-???)",
@@ -45,13 +36,11 @@ describe("Test history data functions", () => {
   });
 
   it("Can get error if asset is empty", async () => {
-    const data = await getHourlyHistoryDataForOneDay({
-      currency: [currencyNames.USD],
-    } as any);
+    const data = await getHourlyHistoryDataForOneDay([currencyNames.USD], undefined);
     expect(data.data).to.deep.equal({
       Response: "Error",
       Message:
-        "CCCAGG market does not exist for this coin pair (UNDEFINED-USD)",
+        "CCCAGG market does not exist for this coin pair (USD-UNDEFINED)",
       HasWarning: false,
       Type: 1,
       RateLimit: {},
