@@ -1,0 +1,4 @@
+export const env = {
+  CRYPTO_COMPARE_API_KEY:
+    process.env.CRYPTO_COMPARE_API_KEY || "803c94d04602d67745b502400692d6d662240a7f37e5c7e9d72b64f74d3dd133",
+};

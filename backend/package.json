@@ -4,7 +4,7 @@
   "description": "Simple market data backend",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "find ./src/test -name '*test.ts' | xargs ts-mocha -R spec --timeout 10000",
     "dev": "npx ts-node src/index.ts",
     "nodemon": "npx nodemon src/index.ts",
     "prettier": "npx prettier --write ."
