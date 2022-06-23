@@ -19,7 +19,7 @@ describe("Test GET /api/market-data", () => {
 
   it("can throw 422 error if assets not in assetNames", async () => {
     const data = {
-      assets: ["???", assetNames.ETH],
+      assets: ["USDT", assetNames.ETH],
       currencies: [currencyNames.USD],
     };
     const response = await axios({
@@ -30,7 +30,7 @@ describe("Test GET /api/market-data", () => {
       expect(err.response.data).to.deep.equal({
         errors: [
           {
-            value: ["???", assetNames.ETH],
+            value: ["USDT", assetNames.ETH],
             msg: 'Invalid assets',
             param: 'assets',
             location: 'body'
@@ -43,7 +43,7 @@ describe("Test GET /api/market-data", () => {
   it("can throw 422 error if currency not in currencyNames", async () => {
     const data = {
       assets: [assetNames.BTC, assetNames.ETH],
-      currencies: ["???"],
+      currencies: ["AUD"],
     };
     const response = await axios({
       url,
@@ -53,7 +53,7 @@ describe("Test GET /api/market-data", () => {
       expect(err.response.data).to.deep.equal({
         errors: [
           {
-            value: ["???"],
+            value: ["AUD"],
             msg: 'Invalid currencies',
             param: 'currencies',
             location: 'body'

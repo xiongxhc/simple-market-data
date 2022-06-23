@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Request, Response } from "express";
 import { assetNames, currencyNames } from "../const/assets";
 import { getMarketData } from "../controller/marketData";
@@ -16,7 +15,7 @@ const marketData = async (req: Request, res: Response) => {
 
     const { data } = await getMarketData({assets, currencies});
     
-    if (data.Response) {
+    if (data.Response === "Error") {
       throw new APIError(`Unable to get data for asset: ${assets} in currency: ${currencies}`);
     }
 

@@ -14,7 +14,7 @@ export const getMarketData = async ({assets, currencies}: GetMarketDataParams) =
   const currenciesString = currencies.join(",");
   return await axios({
     method: "GET",
-    url: `${url.CRYPTO_COMPARE_BASE_URL}/data/pricemultifull?fsyms=${assetsString}&tsyms=${currenciesString}`,
+    url: `${url.CRYPTO_COMPARE_BASE_URL}/data/pricemulti?fsyms=${assetsString}&tsyms=${currenciesString}`,
     headers: {
       authorization: `${env.CRYPTO_COMPARE_API_KEY}`
     }
