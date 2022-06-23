@@ -13,9 +13,3 @@ export class APIError extends BaseError {
     super(name);
   }
 }
-
-export class UnableToGetDataError extends BaseError {
-  constructor(name = "UnableToGetDataError") {
-    super(name);
-  }
-}

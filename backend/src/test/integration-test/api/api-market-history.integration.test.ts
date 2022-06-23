@@ -2,12 +2,12 @@ import axios from "axios";
 import { expect } from "chai";
 import { assetNames, currencyNames } from "../../../const/assets";
 
-describe("Test GET /api/market-data", () => {
-  const url = "http://localhost:3080/api/market-data";
-  it("can get market data", async () => {
+describe("Test GET /api/market-history", () => {
+  const url = "http://localhost:3080/api/market-history";
+  it("can get 24 hour market history", async () => {
     const data = {
-      assets: [assetNames.BTC, assetNames.ETH],
-      currencies: [currencyNames.USD],
+      asset: assetNames.BTC,
+      currency: currencyNames.USD,
     };
     const response = await axios({
       url,
@@ -15,12 +15,13 @@ describe("Test GET /api/market-data", () => {
       data,
     });
     expect(response.status).to.deep.equal(200);
+    expect(response.data.data.Data.Data.length).to.deep.equal(25);
   });
 
   it("can throw 422 error if assets not in assetNames", async () => {
     const data = {
-      assets: ["USDT", assetNames.ETH],
-      currencies: [currencyNames.USD],
+      asset: "USDT",
+      currency: currencyNames.USD,
     };
     const response = await axios({
       url,
@@ -30,9 +31,9 @@ describe("Test GET /api/market-data", () => {
       expect(err.response.data).to.deep.equal({
         errors: [
           {
-            value: ["USDT", assetNames.ETH],
-            msg: "Invalid assets",
-            param: "assets",
+            value: "USDT",
+            msg: "Invalid asset",
+            param: "asset",
             location: "body",
           },
         ],
@@ -42,8 +43,8 @@ describe("Test GET /api/market-data", () => {
 
   it("can throw 422 error if currency not in currencyNames", async () => {
     const data = {
-      assets: [assetNames.BTC, assetNames.ETH],
-      currencies: ["AUD"],
+      asset: assetNames.BTC,
+      currency: "AUD",
     };
     const response = await axios({
       url,
@@ -53,9 +54,9 @@ describe("Test GET /api/market-data", () => {
       expect(err.response.data).to.deep.equal({
         errors: [
           {
-            value: ["AUD"],
-            msg: "Invalid currencies",
-            param: "currencies",
+            value: "AUD",
+            msg: "Invalid currency",
+            param: "currency",
             location: "body",
           },
         ],

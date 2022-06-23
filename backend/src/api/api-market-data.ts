@@ -4,7 +4,7 @@ import { getMarketData } from "../controller/marketData";
 import { APIError } from "../utils/error";
 import { unhandledException } from "../utils/unhandledException";
 
-interface GetMarketDataParams {
+export interface GetMarketDataParams {
   assets: assetNames[];
   currencies: currencyNames[];
 }
@@ -13,14 +13,15 @@ const marketData = async (req: Request, res: Response) => {
   try {
     const { assets, currencies }: GetMarketDataParams = req.body;
 
-    const { data } = await getMarketData({assets, currencies});
-    
+    const { data } = await getMarketData({ assets, currencies });
+
     if (data.Response === "Error") {
-      throw new APIError(`Unable to get data for asset: ${assets} in currency: ${currencies}`);
+      throw new APIError(
+        `Unable to get data for asset: ${assets} in currency: ${currencies}`
+      );
     }
 
     return res.status(200).json({ data });
-
   } catch (err) {
     if (err instanceof APIError) {
       return res.status(500).json({
