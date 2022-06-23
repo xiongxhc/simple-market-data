@@ -19,32 +19,32 @@ const validate = (validations: ValidationChain[]) => {
 
 export const apiGetMarketDataValidation = validate([
   query("assets")
-  .custom((assets) => {
-    const assetArray = assets.split(",");
-    return assetArray.every((asset: string) => {
-      return asset in assetNames;
-    });
-  })
-  .withMessage("Invalid assets"),
+    .custom((assets) => {
+      const assetArray = assets.split(",");
+      return assetArray.every((asset: string) => {
+        return asset in assetNames;
+      });
+    })
+    .withMessage("Invalid assets"),
   query("currencies")
-  .custom((currencies) => {
-    const currencyArray = currencies.split(",");
-    return currencyArray.every((currency: string) => {
-      return currency in currencyNames;
-    });
-  })
-  .withMessage("Invalid currencies"),
+    .custom((currencies) => {
+      const currencyArray = currencies.split(",");
+      return currencyArray.every((currency: string) => {
+        return currency in currencyNames;
+      });
+    })
+    .withMessage("Invalid currencies"),
 ]);
 
 export const apiGetMarketHistoryValidation = validate([
   query("asset")
-  .custom((asset) => {
-    return asset in assetNames;
-  })
-  .withMessage("Invalid asset"),
+    .custom((asset) => {
+      return asset in assetNames;
+    })
+    .withMessage("Invalid asset"),
   query("currency")
-  .custom((currency) => {
-    return currency in currencyNames;
-  })
-  .withMessage("Invalid currency"),
+    .custom((currency) => {
+      return currency in currencyNames;
+    })
+    .withMessage("Invalid currency"),
 ]);
