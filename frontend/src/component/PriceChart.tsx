@@ -23,12 +23,12 @@ export const PriceChart = () => {
   }, []);
 
   return (
-    <Chart autoFit height={700} data={data}>
+    <Chart padding={[20, 40, 100, 80]} autoFit height={700} data={data}>
       <LineAdvance
         shape="smooth"
         point
         area
-        position="time*open"
+        position="time*price"
         color="city"
       />
     </Chart>
