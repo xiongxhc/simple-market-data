@@ -13,7 +13,7 @@ describe("Test GET /api/market-history", () => {
       `${url}?asset=${query.asset}&currency=${query.currency}`
     );
     expect(response.status).to.deep.equal(200);
-    expect(response.data.data.Data.Data.length).to.deep.equal(25);
+    expect(response.data.data.length).to.deep.equal(25);
   });
 
   it("can throw 422 error if assets not in assetNames", async () => {

@@ -16,7 +16,7 @@ const getHistoricData = async (req: Request, res: Response) => {
       );
     }
 
-    return res.status(200).json({ data });
+    return res.status(200).json({ data: data.Data.Data });
   } catch (err) {
     if (err instanceof APIError) {
       return res.status(500).json({
