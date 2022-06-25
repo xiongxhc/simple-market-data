@@ -12,21 +12,31 @@ const query = {
   currencies: [currencyNames.USD],
 };
 
-const Container = styled("div")({
+const PriceContainer = styled("div")({
   color: "darkslategray",
   backgroundColor: "aliceblue",
   padding: 8,
   borderRadius: 4,
-  margin: "20px",
-  width: "110%",
+  margin: "1em",
+  width: "10em",
+});
+
+const Box = styled("div")({
+  display: "flex",
+  justifyContent: "space-between"
 });
 
 const labelGenerate = (data): React.ReactElement => {
   const displayData = _map(data, (currencyValue, key) => {
-    const asset = `${[key]}: ${_map(currencyValue, (value, key) => {
-      return `${value} ${key}`;
-    })}`;
-    return <Container>{asset}</Container>;
+    const asset = (
+        <Box>
+          <div>{`${[key]}: `}</div>
+          <div>{`${_map(currencyValue, (value, key) => {
+            return `${value.toFixed(2)} ${key}`;
+          })}`}
+          </div>
+        </Box>)
+    return <PriceContainer>{asset}</PriceContainer>;
   });
   return <div>{displayData}</div>;
 };
