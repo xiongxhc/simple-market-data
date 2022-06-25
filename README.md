@@ -31,3 +31,8 @@ Frontend:
 pnpm i
 npm start
 ```
+
+## Improvement List
+
+- Add Redux or Mobx
+- Dockerize

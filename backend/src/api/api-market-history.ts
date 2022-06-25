@@ -28,7 +28,9 @@ const getHistoricData = async (req: Request, res: Response) => {
       );
     }
 
-    return res.status(200).json({ data: sequalizeMarketHistoryData(data.Data.Data) });
+    return res
+      .status(200)
+      .json({ data: sequalizeMarketHistoryData(data.Data.Data) });
   } catch (err) {
     if (err instanceof APIError) {
       return res.status(500).json({
