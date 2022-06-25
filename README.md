@@ -37,3 +37,8 @@ npm start
 - Add Redux or Mobx
 - Use WebSocket for live data
 - Dockerize
+
+## Screenshot
+![ss](https://user-images.githubusercontent.com/21257743/175784631-99bd399f-0e99-4cfc-b70a-cb294c611dfe.png)
+
+
