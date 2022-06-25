@@ -6,6 +6,7 @@ import { SpinnerCircular } from "spinners-react";
 
 import { url } from "../const/url";
 import { assetNames, currencyNames } from "../const/assets";
+import reportWebVitals from "../reportWebVitals";
 
 const query = {
   assets: [assetNames.BTC, assetNames.ETH],
@@ -18,6 +19,7 @@ const Container = styled("div")({
   padding: 8,
   borderRadius: 4,
   margin: "20px",
+  width: "110%",
 });
 
 const labelGenerate = (data): React.ReactElement => {
@@ -30,19 +32,22 @@ const labelGenerate = (data): React.ReactElement => {
   return <div>{displayData}</div>;
 };
 
+const fetchMarketData = async () => {
+  return await axios.get(
+    `/market-data?assets=${query.assets}&currencies=${query.currencies}`,
+    {
+      baseURL: url.BASE_URL,
+    }
+  );
+};
+
 export const MarketPrice = () => {
   const [data, setData] = React.useState({});
   const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
     setLoading(true);
-    axios
-      .get(
-        `/market-data?assets=${query.assets}&currencies=${query.currencies}`,
-        {
-          baseURL: url.BASE_URL,
-        }
-      )
+    fetchMarketData()
       .then((res) => {
         setData(res.data.data);
         setLoading(false);
@@ -51,6 +56,19 @@ export const MarketPrice = () => {
         setData(err.response.data.errors);
         setLoading(false);
       });
+  }, []);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      fetchMarketData()
+        .then((res) => {
+          setData(res.data.data);
+        })
+        .catch((err) => {
+          setData(err.response.data.errors);
+        });
+    }, 3000);
+    return () => clearInterval(interval);
   }, []);
 
   return (

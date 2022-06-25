@@ -7,6 +7,15 @@ import { SpinnerCircular } from "spinners-react";
 import { url } from "../const/url";
 import { assetNames, currencyNames } from "../const/assets";
 
+const fetchMarketHistory = async (tabValue) => {
+  return await axios.get(
+    `/market-history?asset=${tabValue}&currency=${currencyNames.USD}`,
+    {
+      baseURL: url.BASE_URL,
+    }
+  );
+};
+
 export const PriceChart = () => {
   const [data, setData] = React.useState({});
   const [loading, setLoading] = React.useState(false);
@@ -14,10 +23,7 @@ export const PriceChart = () => {
 
   React.useEffect(() => {
     setLoading(true);
-    axios
-      .get(`/market-history?asset=${tabValue}&currency=${currencyNames.USD}`, {
-        baseURL: url.BASE_URL,
-      })
+    fetchMarketHistory(tabValue)
       .then((res) => {
         setData(res.data.data);
         setLoading(false);

@@ -6,7 +6,7 @@ A simple service to view the real time market data in USD for the two cryptocurr
 
 - Endpoint to check real time market data in USD for BTC and ETH
 - Endpoint to retrieve historic data for pass 24 hours
-- A frontend to view the market data and historic data for pass 24 (assuming hourly charts)
+- Frontend to view the market price (updates every 3 seconds) and historic graph data for pass 24 (assuming hourly charts)
 
 ## Tech
 
@@ -35,4 +35,5 @@ npm start
 ## Improvement List
 
 - Add Redux or Mobx
+- Use WebSocket for live data
 - Dockerize
