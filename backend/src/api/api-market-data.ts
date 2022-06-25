@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { assetNames, currencyNames } from "../const/assets";
 import { getMarketData } from "../controller/marketData";
 import { APIError } from "../utils/error";
 import { unhandledException } from "../utils/unhandledException";

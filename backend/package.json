@@ -7,15 +7,19 @@
     "test": "find ./src/test -name '*test.ts' | xargs ts-mocha -R spec --timeout 10000",
     "dev": "npx ts-node src/index.ts",
     "nodemon": "npx nodemon src/index.ts",
-    "prettier": "npx prettier --write ."
+    "prettier": "npx prettier --write .",
+    "lint": "eslint --fix --ext .ts,.tsx ."
   },
   "author": "Chris Xiong",
   "license": "ISC",
   "dependencies": {
+    "@typescript-eslint/eslint-plugin": "5.29.0",
+    "@typescript-eslint/parser": "5.29.0",
     "axios": "0.27.2",
     "bignumber.js": "9.0.2",
     "chai": "4.3.6",
     "cors": "2.8.5",
+    "eslint": "8.18.0",
     "express": "4.18.1",
     "express-validator": "6.14.2",
     "mocha": "10.0.0"
