@@ -6,7 +6,6 @@ import { SpinnerCircular } from "spinners-react";
 
 import { url } from "../const/url";
 import { assetNames, currencyNames } from "../const/assets";
-import reportWebVitals from "../reportWebVitals";
 
 const query = {
   assets: [assetNames.BTC, assetNames.ETH],
